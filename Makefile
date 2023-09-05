@@ -1,4 +1,4 @@
-INPUTS = $(filter-out index.md, $(wildcard *.md))
+INPUTS = $(filter-out index.md, $(wildcard *.md **/*.md))
 OUTPUTS = $(INPUTS:.md=.html)
 
 DIAGRAM_LUA = diagram.lua
