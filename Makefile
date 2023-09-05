@@ -1,12 +1,13 @@
 INPUTS = $(filter-out index.md, $(wildcard *.md **/*.md))
 OUTPUTS = $(INPUTS:.md=.html)
 
+CSS = simple.css
 DIAGRAM_LUA = diagram.lua
 
 all: index.html
 
 index.html: index.md
-	pandoc --embed-resources --metadata=title:$(basename $<) --standalone \
+	pandoc --css=$(CSS) --embed-resources --metadata=title:$(basename $<) --standalone \
 		--from=markdown $< --output=$@
 
 index.md: $(OUTPUTS)
@@ -14,9 +15,13 @@ index.md: $(OUTPUTS)
 	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
 
 %.html: %.md $(DIAGRAM_LUA)
-	pandoc --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $<) \
+	pandoc --css=$(CSS) --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $<) \
 		--standalone \
 		--from=markdown $< --output=$@
+
+$(CSS):
+	curl --location --remote-name \
+	https://github.com/kevquirk/$(CSS)/raw/v2.2.1/$(CSS)
 
 $(DIAGRAM_LUA):
 	curl --location --remote-name \
@@ -25,4 +30,4 @@ $(DIAGRAM_LUA):
 .PHONY: clean
 
 clean:
-	rm --force $(DIAGRAM_LUA) index.html index.md $(OUTPUTS)
+	rm --force $(CSS) $(DIAGRAM_LUA) index.html index.md $(OUTPUTS)
