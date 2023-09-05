@@ -25,4 +25,4 @@ $(DIAGRAM_LUA):
 .PHONY: clean
 
 clean:
-	rm --force index.html $(OUTPUTS)
+	rm --force $(DIAGRAM_LUA) index.html $(OUTPUTS)
