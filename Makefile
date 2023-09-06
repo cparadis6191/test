@@ -11,7 +11,7 @@ index.html: index.md
 		--from=markdown $< --output=$@
 
 index.md: $(OUTPUTS)
-	echo '# Pages\n' > $@
+	echo '# Index\n' > $@
 	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
 
 %.html: %.md $(DIAGRAM_LUA)
