@@ -7,8 +7,13 @@ DIAGRAM_LUA = diagram.lua
 all: index.html
 
 index.html: index.md $(CSS)
-	pandoc --css=$(CSS) --embed-resources --metadata=title:$(basename $(notdir $<)) --standalone \
-		--from=markdown $< --output=$@
+	pandoc --css=$(CSS) \
+		--embed-resources \
+		--metadata=title:$(basename $(notdir $<)) \
+		--standalone \
+		--from=markdown \
+		$< \
+		--output=$@
 
 index.md: index-header.md $(OUTPUTS)
 	cat $< > $@
@@ -19,19 +24,31 @@ index-header.md:
 	echo '# This is the index header!\n' > $@
 
 %.html: %.md $(CSS) $(DIAGRAM_LUA)
-	pandoc --css=$(CSS) --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $(notdir $<)) \
+	pandoc --css=$(CSS) \
+		--embed-resources \
+		--lua-filter=$(DIAGRAM_LUA) \
+		--metadata=title:$(basename $(notdir $<)) \
 		--standalone \
-		--from=markdown $< --output=$@
+		--from=markdown \
+		$< \
+		--output=$@
 
 $(CSS):
-	curl --location --remote-name \
-	https://github.com/kevquirk/$(CSS)/raw/v2.2.1/$(CSS)
+	curl --location \
+		--remote-name \
+		https://github.com/kevquirk/$(CSS)/raw/v2.2.1/$(CSS)
 
 $(DIAGRAM_LUA):
-	curl --location --remote-name \
-	https://raw.githubusercontent.com/pandoc-ext/diagram/v1.0.0/_extensions/diagram/$(DIAGRAM_LUA)
+	curl --location \
+		--remote-name \
+		https://raw.githubusercontent.com/pandoc-ext/diagram/v1.0.0/_extensions/diagram/$(DIAGRAM_LUA)
 
 .PHONY: clean
 
 clean:
-	rm --force $(CSS) $(DIAGRAM_LUA) index.html index.md $(OUTPUTS)
+	rm --force \
+		$(CSS) \
+		$(DIAGRAM_LUA) \
+		index.html \
+		index.md \
+		$(OUTPUTS)
