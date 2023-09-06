@@ -7,7 +7,7 @@ DIAGRAM_LUA = diagram.lua
 all: index.html
 
 index.html: index.md
-	pandoc --css=$(CSS) --embed-resources --metadata=title:$(basename $<) --standalone \
+	pandoc --css=$(CSS) --embed-resources --metadata=title:$(basename $(notdir $<)) --standalone \
 		--from=markdown $< --output=$@
 
 index.md: index-header.md $(OUTPUTS)
@@ -19,7 +19,7 @@ index-header.md:
 	echo '# This is the index header!\n' > $@
 
 %.html: %.md $(DIAGRAM_LUA)
-	pandoc --css=$(CSS) --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $<) \
+	pandoc --css=$(CSS) --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $(notdir $<)) \
 		--standalone \
 		--from=markdown $< --output=$@
 
