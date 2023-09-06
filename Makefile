@@ -1,4 +1,4 @@
-INPUTS = $(filter-out index.md, $(wildcard *.md **/*.md))
+INPUTS = $(filter-out index-header.md index.md, $(wildcard *.md **/*.md))
 OUTPUTS = $(INPUTS:.md=.html)
 
 CSS = simple.css
@@ -10,9 +10,13 @@ index.html: index.md
 	pandoc --css=$(CSS) --embed-resources --metadata=title:$(basename $<) --standalone \
 		--from=markdown $< --output=$@
 
-index.md: $(OUTPUTS)
-	echo '# Index\n' > $@
+index.md: index-header.md $(OUTPUTS)
+	cat $< > $@
+	echo '## Index\n' >> $@
 	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
+
+index-header.md:
+	echo '# This is the index header!\n' > $@
 
 %.html: %.md $(DIAGRAM_LUA)
 	pandoc --css=$(CSS) --embed-resources --lua-filter=$(DIAGRAM_LUA) --metadata=title:$(basename $<) \
