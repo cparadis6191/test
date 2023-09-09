@@ -21,7 +21,7 @@ index.md: index-header.md $(OUTPUTS)
 	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
 
 index-header.md:
-	echo '# This is the index header!\n' > $@
+	echo '# Index Header\n\nThis is the index header!\n' > $@
 
 %.html: %.md $(CSS) $(DIAGRAM_LUA)
 	pandoc --css=$(CSS) \
