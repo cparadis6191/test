@@ -36,12 +36,12 @@ index-header.md:
 $(CSS):
 	curl --location \
 		--remote-name \
-		https://github.com/kevquirk/$(CSS)/raw/v2.2.1/$(CSS)
+		https://github.com/kevquirk/simple.css/raw/v2.2.1/simple.css
 
 $(DIAGRAM_LUA):
 	curl --location \
 		--remote-name \
-		https://raw.githubusercontent.com/pandoc-ext/diagram/v1.0.0/_extensions/diagram/$(DIAGRAM_LUA)
+		https://raw.githubusercontent.com/pandoc-ext/diagram/v1.0.0/_extensions/diagram/diagram.lua
 
 .PHONY: clean
 
