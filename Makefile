@@ -18,7 +18,7 @@ index.html: index.md $(CSS)
 index.md: index-header.md $(OUTPUTS) index-footer.md
 	cat $< > $@
 	echo '## Index\n' >> $@
-	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
+	$(foreach output, $(OUTPUTS), echo '* [$(output)]($(output))' >> $@;)
 	echo '' >> $@
 	cat $(lastword $^) >> $@
 
