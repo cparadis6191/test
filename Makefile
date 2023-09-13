@@ -1,4 +1,4 @@
-INPUTS := $(filter-out index-header.md index.md, $(wildcard *.md **/*.md))
+INPUTS := $(filter-out index-header.md index.md index-footer.md, $(wildcard *.md **/*.md))
 OUTPUTS := $(INPUTS:.md=.html)
 
 CSS := simple.css
@@ -15,13 +15,18 @@ index.html: index.md $(CSS)
 		$< \
 		--output=$@
 
-index.md: index-header.md $(OUTPUTS)
+index.md: index-header.md $(OUTPUTS) index-footer.md
 	cat $< > $@
 	echo '## Index\n' >> $@
 	$(foreach output,$(OUTPUTS),echo '* [$(output)]($(output))' >> $@;)
+	echo '' >> $@
+	cat $(lastword $^) >> $@
 
 index-header.md:
 	echo '# Index Header\n\nThis is the index header!\n' > $@
+
+index-footer.md:
+	echo '## Index Footer\n\nThis is the index footer!\n' > $@
 
 %.html: %.md $(CSS) $(DIAGRAM_LUA)
 	pandoc --css=$(CSS) \
