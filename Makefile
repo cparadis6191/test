@@ -1,8 +1,8 @@
-INPUTS = $(filter-out index-header.md index.md, $(wildcard *.md **/*.md))
-OUTPUTS = $(INPUTS:.md=.html)
+INPUTS := $(filter-out index-header.md index.md, $(wildcard *.md **/*.md))
+OUTPUTS := $(INPUTS:.md=.html)
 
-CSS = simple.css
-DIAGRAM_LUA = diagram.lua
+CSS := simple.css
+DIAGRAM_LUA := diagram.lua
 
 all: index.html
 
